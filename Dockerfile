@@ -33,6 +33,48 @@ RUN dnf -y install \
     python3.11-setuptools \
     && dnf clean all
 
+
+RUN cat > /etc/yum.repos.d/centos-stream.repo <<EOF
+[centos-stream-baseos]
+name=CentOS Stream 9 - BaseOS
+baseurl=http://mirror.stream.centos.org/9-stream/BaseOS/ppc64le/os/
+gpgcheck=0
+enabled=1
+
+[centos-stream-appstream]
+name=CentOS Stream 9 - AppStream
+baseurl=http://mirror.stream.centos.org/9-stream/AppStream/ppc64le/os/
+gpgcheck=0
+enabled=1
+
+[centos-stream-crb]
+name=CentOS Stream 9 - CRB
+baseurl=http://mirror.stream.centos.org/9-stream/CRB/ppc64le/os/
+gpgcheck=0
+enabled=1
+EOF
+
+# Install rpm-devel and other build dependencies
+RUN dnf install -y \
+    cmake \
+    ninja-build \
+    gcc \
+    gcc-c++ \
+    make \
+    python3-devel \
+    libxml2-devel \
+    libcurl-devel \
+    openssl-devel \
+    zlib-devel \
+    bzip2-devel \
+    xz-devel \
+    sqlite-devel \
+    glib2-devel \
+    libmodulemd-devel \
+    librepo-devel \
+    libsolv-devel \
+    rpm-devel
+
 # Install dependencies in a separate layer to maximize layer caching
 COPY requirements.txt .
 RUN python3.11 -m venv /venv && \
