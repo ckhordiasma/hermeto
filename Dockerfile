@@ -34,22 +34,22 @@ RUN dnf -y install \
     && dnf clean all
 
 
-RUN cat > /etc/yum.repos.d/centos-stream.repo <<EOF
+RUN cat > /etc/yum.repos.d/centos-stream.repo <<'EOF'
 [centos-stream-baseos]
 name=CentOS Stream 9 - BaseOS
-baseurl=http://mirror.stream.centos.org/9-stream/BaseOS/ppc64le/os/
+baseurl=http://mirror.stream.centos.org/9-stream/BaseOS/$arch/os/
 gpgcheck=0
 enabled=1
 
 [centos-stream-appstream]
 name=CentOS Stream 9 - AppStream
-baseurl=http://mirror.stream.centos.org/9-stream/AppStream/ppc64le/os/
+baseurl=http://mirror.stream.centos.org/9-stream/AppStream/$arch/os/
 gpgcheck=0
 enabled=1
 
 [centos-stream-crb]
 name=CentOS Stream 9 - CRB
-baseurl=http://mirror.stream.centos.org/9-stream/CRB/ppc64le/os/
+baseurl=http://mirror.stream.centos.org/9-stream/CRB/$arch/os/
 gpgcheck=0
 enabled=1
 EOF
